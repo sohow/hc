@@ -1,12 +1,18 @@
 var krpano, constantScreenWidth, constantScreenHeight, resizeTimer, 
 WRatio, HRatio, chatData, whPortraitArr = [], whLandscapeErr = [], chatCanvas, 
-ifshowChat = false, adoptRatio, devicefontSize,
+ifshowChat = false, adoptRatio, devicefontSize, friPage = 1,
 resizeTriggerNum = 0, screen_nameArr = [], uidArr = [], fritoken = '', 
 uidString = '', leftCount = 0, totalCount = 7, playCount = 0, respondTxt = '', 
 getPrizeCount = 0, simulateClickResult = 0, getFLowerCount = 0, ifGetNull = false, 
 ifGetPrize = false;
 
 //$('.chat').hide();
+
+$(document).on("touchmove", function(evt) {
+				
+				evt.preventDefault();
+				
+			}, false);
 
 //字体图片随窗体缩放
 function door() {
@@ -147,7 +153,7 @@ $('#clofri').on('click',function () {
 		
 		$('#treaNum').on('click',function () {
 
-			window.location.href = 'http://hcvr.github.io/hc/chest';
+			window.location.href = 'hc/chest';
 			
 		})
 		
@@ -435,7 +441,7 @@ window.addEventListener("orientationchange", function() {
 	
     // Announce the new orientation number
     
-	alert('window.orientation  '+window.orientation);
+//	alert('window.orientation  '+window.orientation);
     
     /*$(window).one('resizestop', 0, function() {
 	
@@ -526,7 +532,7 @@ function hideGameInfo () {
 
 $('#treaNum').on('click',function () {
 	
-	window.location.href = 'http://hcvr.github.io/hc/chest';
+	window.location.href = 'hc/chest';
 	
 })
 
@@ -555,6 +561,8 @@ document.addEventListener("showGameInfo", function (event) {
 //		$('#chatIcon').show();
 		
 		$('.packageInfo').show();
+		
+		$('.userInfo').css('display','inline-block');
 		
 		$('.userInfo').show();
 		 
@@ -1015,7 +1023,7 @@ function krpanoReady(krpanObj)
 			
 			$('#treaNum').off('click',function () {
 	
-				window.location.href = 'http://hcvr.github.io/hc/chest';
+				window.location.href = 'hc/chest';
 				
 			})
 			
@@ -1045,14 +1053,25 @@ function krpanoReady(krpanObj)
 	});
 	
 	
-	$('#changeFir').on('click', getFri);
+	$('#changeFir').on('click', function () {
+		
+		friPage++;
+		
+		getFri();
+		
+	});
 	
 	
 	function getFri() {
 		
+		var postFri = {
+			
+			page: friPage
+		}
+		
 		if (IF_NET) {
 					
-			ajaxRequest(false, "get", 'getfriend', '', function(result) {
+			ajaxRequest(false, "post", 'getfriend', postFri, function(result) {
 			
 			
 						if (result.code != 10000) {
@@ -1088,31 +1107,65 @@ function krpanoReady(krpanObj)
 							
 							console.log('fritoken  '+fritoken);
 							
-							for (var i = 0; i < result.data.user.length; i++) {
+							if (result.data.user.length > 0) {
 								
-								uidArr.push(String(result.data.user[i].uid))
 								
-								screen_nameArr.push(String(result.data.user[i].screen_name))
+								for (var i = 0; i < result.data.user.length; i++) {
+									
+									uidArr.push(String(result.data.user[i].uid))
+									
+									screen_nameArr.push(String(result.data.user[i].screen_name))
+									
+	//										uidString += String(result.data.user[i].uid)+',';
+									
+									var content = '<div class="friendP"><img src="'+ result.data.user[i].avatar_large +'" class="clip-circle" /></div>'
+									
+									$('.picCon').append(content);
+								}
 								
-//										uidString += String(result.data.user[i].uid)+',';
-								
-								var content = '<div class="friendP"><img src="'+ result.data.user[i].avatar_large +'" class="clip-circle" /></div>'
-								
-								$('.picCon').append(content);
 							}
 							
 							
-							uidString = uidArr[0]+','+uidArr[1]+','+uidArr[2];
+							if (uidArr.length < 3) {
+								
+								
+								if (uidArr.length == 2) {
+									
+									
+									uidString = uidArr[0]+','+uidArr[1];
+									
+									screen_nameStr = screen_nameArr[0]+','+screen_nameArr[1];
+									
+									
+								} else {
+									
+									
+									uidString = uidArr[0];
+									
+									screen_nameStr = screen_nameArr[0];
+									
+								}
+								
+								
+							} else {
+								
+								uidString = uidArr[0]+','+uidArr[1]+','+uidArr[2];
+								
+								screen_nameStr = screen_nameArr[0]+','+screen_nameArr[1]+','+screen_nameArr[2];
+								
+							}
 							
-							screen_nameStr = screen_nameArr[0]+','+screen_nameArr[1]+','+screen_nameArr[2];
+							
 							
 							console.log('if uidString is string '+ typeof uidString);
 							
 							console.log('uidString.length  '+uidString.length)
 
+
 //									uidString.substring(0, uidString.length - 1);
 //									
 //									uidString.slice(1, - 1);
+							
 							
 							console.log('uidString  '+uidString);
 							
@@ -1204,7 +1257,7 @@ function krpanoReady(krpanObj)
 									
 									$('#treaNum').on('click',function () {
 	
-										window.location.href = 'http://hcvr.github.io/hc/chest';
+										window.location.href = 'hc/chest';
 										
 									})
 									
@@ -1282,7 +1335,7 @@ function krpanoReady(krpanObj)
 		
 		$('#treaNum').off('click',function () {
 	
-			window.location.href = 'http://hcvr.github.io/hc/chest';
+			window.location.href = 'hc/chest';
 			
 		})
 		
