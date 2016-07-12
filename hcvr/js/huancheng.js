@@ -94,8 +94,8 @@ window.onresize = function () {
 	console.log('onresize door ');
 }
 
-/*
-alert(' $(this).width()  '+$(this).width()+ '  $(this).height()  '+$(this).height())
+
+/*alert(' $(this).width()  '+$(this).width()+ '  $(this).height()  '+$(this).height())
 
 
 alert('window.screen.width  '+window.screen.width+ '  window.screen.height  '+window.screen.height);
@@ -105,6 +105,7 @@ alert('window.innerWidth  '+window.innerWidth + '  window.innerHeight  '+window.
 
 
 alert('document.documentElement.clientWidth  '+ document.documentElement.clientWidth + '  document.documentElement.clientHeight  '+ document.documentElement.clientHeight);
+
 */
 
 constantScreenWidth = window.innerWidth;
@@ -115,47 +116,47 @@ constantScreenHeight = window.innerHeight;
 
 $('#clofri').on('click',function () {
 	
+	
 	$('.friendsP').hide();
 									
 									
-									
-									respondTxt = '正在返回大厅...';
-									
-									
-									showTxt(false);
-									
-									
-									setTimeout(function () {
-										
-										$('#overlay').fadeOut('fast');
-									
-										$('#overlay').hide();
-										
-										krpano.call("loadscene('scene_____________2-ok');");
-										
-										$('#VR').show();
-										
+		respondTxt = '正在返回大厅...';
+		
+		
+		showTxt(false);
+		
+		
+		setTimeout(function () {
+			
+			$('#overlay').fadeOut('fast');
+		
+			$('#overlay').hide();
+			
+			krpano.call("loadscene('scene_____________2-ok');");
+			
+			$('#VR').show();
+			
 //										$('#chatIcon').show();
-									
-									},700);
-									
-									
-									
-									$('.chatDiv').show();
-									
-									
-									$('#treaNum').on('click',function () {
-	
-										window.location.href = 'http://hcvr.github.io/hc/chest';
-										
-									})
-									
-									
-									$('#treaNum').removeClass('treaNum');
-									
-									$('#treaNum').addClass('trea');
-									
-									$('#treaNum').children('p').hide();
+		
+		},700);
+		
+		
+		
+		$('.chatDiv').show();
+		
+		
+		$('#treaNum').on('click',function () {
+
+			window.location.href = 'http://hcvr.github.io/hc/chest';
+			
+		})
+		
+		
+		$('#treaNum').removeClass('treaNum');
+		
+		$('#treaNum').addClass('trea');
+		
+		$('#treaNum').children('p').hide();
 	
 })
 
@@ -315,7 +316,7 @@ function toogleShowChat () {
 
 
 
-function calcWHratio () {
+function calcWHratio() {
 	
 	
 	var orgDeg = window.orientation;
@@ -428,16 +429,13 @@ function calcWHratio () {
 }
 
 
-/*alert('window.orientation  '+window.orientation);
-
-alert('window.devicePixelRatio  '+window.devicePixelRatio); 
-*/
-
 
 // Listen for orientation changes      
 window.addEventListener("orientationchange", function() {
 	
     // Announce the new orientation number
+    
+	alert('window.orientation  '+window.orientation);
     
     /*$(window).one('resizestop', 0, function() {
 	
@@ -548,6 +546,8 @@ document.addEventListener("showGameInfo", function (event) {
 	
 	var curSce = krpano.get('xml.scene');
 	
+	console.log('showGameInfo  curSce  '+curSce);
+	
 	if (curSce == 'scene_____________2-ok') {
 		
 		$('#VR').show();
@@ -557,7 +557,32 @@ document.addEventListener("showGameInfo", function (event) {
 		$('.packageInfo').show();
 		
 		$('.userInfo').show();
+		 
 		
+/*		html2canvas( $('.chatShow'), {
+		
+			    	
+	     	onrendered: function (canvas) {
+	     	
+	     	
+	            var imgageData = canvas.toDataURL("image/png");
+	            
+			    krpano.call("addhotspot(chatPng1);set(hotspot[chatPng1].url,'"+ imgageData + "');set(hotspot[chatPng1].ath,0);set(hotspot[chatPng1].atv,0);");
+	            
+		    	console.log('render chatPng1');
+		    	
+	            console.log('imgageData  '+imgageData);
+	            
+	            var newData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
+	            
+	            console.log('newData  '+newData);
+	            
+	            
+         	}
+	     	
+ 		});*/
+  	
+//		$('.chatShow').hide();
 		
 	} else {
 		
@@ -649,7 +674,7 @@ function getClickLotus (prizeName) {
 				
 				$('.titbg').html('隐莲+1');
 				
-//				$('.yinLNum').attr('src','http://hcvr.github.io/hc/hcvr/img/yinlianPlus.png');
+				$('.yinLNum').attr('src','http://hcvr.github.io/hc/hcvr/img/yinlianPlus.png');
 				
 				respondTxt = '太好了，采到隐莲了！';
 			
@@ -661,7 +686,7 @@ function getClickLotus (prizeName) {
 				
 				$('.titbg').html('隐莲-1');
 				
-//				$('.yinLNum').attr('src','http://hcvr.github.io/hc/hcvr/img/yinlianSub.png');
+				$('.yinLNum').attr('src','http://hcvr.github.io/hc/hcvr/img/yinlianSub.png');
 				
 				respondTxt = '倒霉！不小心 采到毒药了！';
 				
@@ -902,6 +927,9 @@ function showTxt (ifTriggerInvite) {
 		
 		
 	} else {
+		
+		
+		krpano.call('hideHotSpots');
 		
 		
 		$('#clickShow').css('width','2rem');
@@ -1199,13 +1227,18 @@ function krpanoReady(krpanObj)
 	
 	$('#sentTxt').on('click', function () {
 		
+		
 		if ($('.chatTxtVal').val() != '') {
+			
 		    
 		    var chatTxt = $('.chatTxtVal').val();
 		    
+		    
 		    $('.chatUI').html(chatTxt);
 		    
+		    
 		    html2canvas( $('.chatUI'), {
+		    	
 		    	
 	         onrendered: function (canvas) {
 	         	
@@ -1244,7 +1277,6 @@ function krpanoReady(krpanObj)
 		console.log("krpano.get('xml.scene')  "+krpano.get('xml.scene') );
 		
 		
-		
 		$('.chatDiv').hide();
 		
 		
@@ -1276,7 +1308,7 @@ function krpanoReady(krpanObj)
 		onnewSceneLay();
 		
 		
-		$('.chat').hide();
+//		$('.chat').hide();
 		
 	});
 	
@@ -1417,6 +1449,7 @@ function krpanoReady(krpanObj)
 						
 				
 					}, errorReturn);
+					
 					
 			} else {
 				
