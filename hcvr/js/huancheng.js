@@ -513,7 +513,7 @@ $('#pano').on('click', function () {
 
 $('#begin').on('click', function () {
 	
-	krpano.call('showHotSpots');
+//	krpano.call('showHotSpots');
 	
 	hideGameInfo();
 })
